@@ -1,1 +1,104 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+$rija-primary-platte: (
+  50 : #e8eaf8,
+  100 : #c6cbee,
+  200 : #a0a9e3,
+  300 : #7a87d7,
+  400 : #5e6dcf,
+  500 : #4153c6,
+  600 : #3b4cc0,
+  700 : #3242b9,
+  800 : #2a39b1,
+  900 : #1c29a4,
+  A100 : #a0b7ff,
+  A200 : #6388ff,
+  A400 : #4974ff,
+  A700 : #3a69ff,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #ffffff,
+      A700 : #ffffff,
+  )
+);
+
+$rija-accent-platte: (
+    50 : #edfff0,
+    100 : #d1ffda,
+    200 : #b3ffc1,
+    300 : #94ffa8,
+    400 : #7dff95,
+    500 : #66ff82,
+    600 : #5eff7a,
+    700 : #53ff6f,
+    800 : #49ff65,
+    900 : #38ff52,
+    A100 : #ffffff,
+    A200 : #f8fff8,
+    A400 : #deffde,
+    A700 : #cfffcf,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+$rija-primary: mat.define-palette($rija-primary-platte, 500, 200, 700, 600);
+$rija-accent: mat.define-palette($rija-accent-platte, 500, 200, 700);
+
+// The warn palette is optional (defaults to red).
+$rija-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$rija-theme: mat.define-light-theme((
+  color: (
+    primary: $rija-primary,
+    accent: $rija-accent,
+    warn: $rija-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($rija-theme);
+
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

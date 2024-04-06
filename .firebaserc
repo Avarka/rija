@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "rija-webkeret-202324": {
+      "hosting": {
+        "rija": [
+          "rija"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "rija-webkeret-202324"
+  }
+}
