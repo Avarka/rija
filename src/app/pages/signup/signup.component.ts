@@ -10,6 +10,8 @@ import { AuthService } from '../../shared/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { UserService } from '../../shared/services/user.service';
+import { TeamService } from '../../shared/services/team.service';
 
 @Component({
   selector: 'app-signup',
@@ -35,6 +37,8 @@ export class SignupComponent {
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
+    private teamService: TeamService,
     private _snackBar: MatSnackBar,
     private router: Router,
     @Optional() private logger?: LoggerService
@@ -55,11 +59,34 @@ export class SignupComponent {
       .signup(this.signupForm.value.email, this.signupForm.value.password)
       .then((res) => {
         this.logger?.log(res);
-        this._snackBar.open('Sikeres regisztráció!', 'Ok', {
-          duration: 3000,
-          verticalPosition: 'top',
-        });
-        this.router.navigate(['/login']);
+        this.userService
+          .createUser({
+            id: res.user?.uid ?? '',
+            email: this.signupForm.value.email,
+            username: this.signupForm.value.username,
+            teams: [],
+          })
+          .then(() => {
+            this.logger?.log('User created successfully!');
+            this._snackBar.open('Sikeres regisztráció!', 'Ok', {
+              duration: 3000,
+              verticalPosition: 'top',
+            });
+            this.router.navigate(['/login']);
+          })
+          .catch((err) => {
+            this.logger?.error(err);
+            this._snackBar.open('Sikertelen regisztráció!', 'Ok', {
+              duration: 3000,
+              verticalPosition: 'top',
+            });
+          })
+          .finally(() => {
+            this.signupForm.reset();
+            this.signupForm.enable();
+            formDirective.resetForm();
+            this.isLoading = false;
+          });
       })
       .catch((err) => {
         this.logger?.error(err);
@@ -82,8 +109,6 @@ export class SignupComponent {
           duration: 3000,
           verticalPosition: 'top',
         });
-      })
-      .finally(() => {
         this.signupForm.reset();
         this.signupForm.enable();
         formDirective.resetForm();
