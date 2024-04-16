@@ -1,8 +1,15 @@
-import { Team } from "./team";
+import { FullTeam } from "./team";
 
-export interface User {
+export interface FullUser {
     id: string;
     username: string; //displayName
     email: string;
-    teams: Array<Team | string>;
+    teams: Array<FullTeam>;
+}
+
+export interface User {
+    id: string;
+    username: string;
+    email: string;
+    teams: Array<string>;
 }

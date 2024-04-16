@@ -1,6 +1,25 @@
-<mat-sidenav-container>
-  <mat-sidenav mode="side" opened>
-    <app-menu></app-menu>
+<mat-sidenav-container autosize>
+  <mat-sidenav
+    #snav
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [fixedInViewport]="mobileQuery.matches"
+    [opened]="!mobileQuery.matches"
+  >
+    <app-menu />
   </mat-sidenav>
-  <mat-sidenav-content>Main</mat-sidenav-content>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="snav.toggle()"
+        *ngIf="mobileQuery.matches"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Rugalmas Információkövető Jelentések Alkalmazása</span>
+    </mat-toolbar>
+    <router-outlet />
+  </mat-sidenav-content>
 </mat-sidenav-container>

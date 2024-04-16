@@ -1,5 +1,26 @@
-<ul>
-    <li *ngFor="let item of user.teams">
-        {{item}}
-    </li>
-</ul>
+<mat-nav-list class="nav-list">
+  <mat-list-item class="menu-item">
+    <mat-icon matListItemIcon>home</mat-icon>
+    <a routerLink="/" class="menu-link">Főoldal</a>
+  </mat-list-item>
+  <mat-divider />
+  <h3 matSubheader>Csapatok</h3>
+  @if (laodingTeams) {
+  <ngx-skeleton-loader mat-list-item [count]="teamCount"  />
+  } @else { @for (team of teams; track $index ) {
+  <mat-list-item class="menu-item">
+    <mat-icon matListItemIcon>group</mat-icon>
+    <a routerLink="team/{{team.id}}" class="menu-link">{{ team.name }}</a>
+  </mat-list-item>
+  } @empty {
+  <mat-list-item class="menu-item">
+    <mat-icon matListItemIcon>group</mat-icon>
+    <a routerLink="." class="menu-link">Nincs csapatod</a>
+  </mat-list-item>
+  } }
+  <mat-divider />
+  <mat-list-item class="menu-item">
+    <mat-icon matListItemIcon>logout</mat-icon>
+    <a (click)="logout()" class="menu-link">Kijelentkezés</a>
+  </mat-list-item>
+</mat-nav-list>

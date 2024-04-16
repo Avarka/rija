@@ -14,20 +14,22 @@ const routes: Routes = [
       import('./pages/signup/signup.module').then((m) => m.SignupModule),
   },
   {
-    path: 'home',
-    redirectTo: '',
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   {
-    path: '',
+    path: 'home',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomeModule),
-    pathMatch: 'full',
     canActivate: [authGuard],
   },
   {
     path: '**',
     loadChildren: () =>
-      import('./shared/not-found/not-found.module').then((m) => m.NotFoundModule),
+      import('./shared/not-found/not-found.module').then(
+        (m) => m.NotFoundModule
+      ),
   },
 ];
 

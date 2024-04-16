@@ -1,0 +1,16 @@
+<div class="board-wrapper">
+    @for (status of board.statuses; track status.id) {
+        <div class="board-column">
+            <div class="board-column-header">
+                {{ status.name }}
+            </div>
+            <div class="board-column-content">
+                @for (ticket of board.tickets; track $index) {
+                    <div class="board-taskí">
+                        {{ ticket }}
+                    </div>
+                }
+            </div>
+        </div>
+    } 
+</div>

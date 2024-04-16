@@ -2,6 +2,6 @@ export interface Status {
     id: string;
     name: string;
     color: string;
-    previousStatuses: Array<Status>;
-    nextStatuses: Array<Status>;
+    previousStatuses: Array<string>;
+    nextStatuses: Array<string>;
 }

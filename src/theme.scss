@@ -73,8 +73,79 @@ $rija-accent-platte: (
     )
 );
 
+$rija-secondary-palette: (
+    50 : #f5e5f2,
+    100 : #e7bfde,
+    200 : #d795c9,
+    300 : #c76ab3,
+    400 : #bb4aa2,
+    500 : #af2a92,
+    600 : #a8258a,
+    700 : #9f1f7f,
+    800 : #961975,
+    900 : #860f63,
+    A100 : #ffb8e8,
+    A200 : #ff85d7,
+    A400 : #ff52c7,
+    A700 : #ff38be,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$rija-rose-palette: (
+    50 : #fffbfb,
+    100 : #fef6f5,
+    200 : #fef0ef,
+    300 : #fee9e9,
+    400 : #fde5e4,
+    500 : #fde0df,
+    600 : #fddcdb,
+    700 : #fcd8d7,
+    800 : #fcd3d2,
+    900 : #fccbca,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+
+
 $rija-primary: mat.define-palette($rija-primary-platte, 500, 200, 700, 600);
 $rija-accent: mat.define-palette($rija-accent-platte, 500, 200, 700);
+$rija-secondary: mat.define-palette($rija-secondary-palette);
+$rija-rose: mat.define-palette($rija-rose-palette);
 
 // The warn palette is optional (defaults to red).
 $rija-warn: mat.define-palette(mat.$red-palette);

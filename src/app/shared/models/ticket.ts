@@ -1,6 +1,6 @@
 import { Comment } from "./comment";
 import { Status } from "./status";
-import { User } from "./user";
+import { FullUser } from "./user";
 
 export interface Ticket {
     id: string;
@@ -8,8 +8,8 @@ export interface Ticket {
     title: string;
     description: string;
     status: Status;
-    assignee: User | null;
-    reporter: User;
+    assignee: FullUser | null;
+    reporter: FullUser;
     created: Date;
     updated: Date;
     comments: Array<Comment>;

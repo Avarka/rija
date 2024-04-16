@@ -2,9 +2,11 @@ import { Component, OnInit, Optional } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
 import { LoggerService } from '../services/logger.service';
 import { TeamService } from '../services/team.service';
+import { FullTeam, Team } from '../models/team';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -12,39 +14,45 @@ import { TeamService } from '../services/team.service';
   styleUrl: './menu.component.scss',
 })
 export class MenuComponent implements OnInit {
-  user: User;
+  user?: User;
+  teams?: Array<Team>;
+  laodingTeams: boolean = true;
+  teamCount: number = 1;
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private router: Router,
     private teamService: TeamService,
+    private router: Router,
     @Optional() private logger: LoggerService
-  ) {
-    this.user = {} as User;
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.authService.getUserId().then((userId) => {
+    this.authService.getUserId().then(async (userId) => {
       if (!userId) return;
-      this.userService.getUserById(userId).subscribe((user) => {
-        if (!user) return;
-        this.user = user;
-        this.getTeams();
-      });
+      this.laodingTeams = true;
+      this.user = await this.getUser(userId);
+      this.teams = this.getTeams(this.user.teams);
+      this.laodingTeams = false;
     });
   }
 
-  getTeams() {
-    for (let team of this.user.teams) {
-      this.teamService.getTeamById(team as string).subscribe((team) => {
-        if (!team) return;
-        this.user.teams.push(team);
-      });
-    }
+  getUser(userId: string) {
+    return this.userService.getUserByIdPromise(userId);
   }
 
-  logout() {
-    this.authService.logout();
+  getTeams(teamIds: Array<string>): Array<Team> {
+    const teams: Array<Team> = [];
+    teamIds.forEach(async (teamId) => {
+      let team = await this.teamService.getTeamById(teamId);
+
+      teams.push(team);
+    });
+    return teams;
+  }
+
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

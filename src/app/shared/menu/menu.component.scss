@@ -1,0 +1,8 @@
+.menu-link {
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    &:link, &:visited, &:hover, &:active {
+        color: inherit;
+    }
+}

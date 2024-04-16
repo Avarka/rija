@@ -1,0 +1,11 @@
+@if (team && boards) {
+    @if (boards.length > 1) {
+        
+    } @else if (boards.length == 1) {
+        <app-board [board]="boards[0]"></app-board>
+    } @else {
+        <p> korte </p>
+    }
+} @else {
+    <p> loading </p>
+}
