@@ -6,18 +6,18 @@
   <mat-divider />
   <h3 matSubheader>Csapatok</h3>
   @if (laodingTeams) {
-  <ngx-skeleton-loader mat-list-item [count]="teamCount"  />
+  <ngx-skeleton-loader mat-list-item [count]="teamCount+1" />
   } @else { @for (team of teams; track $index ) {
   <mat-list-item class="menu-item">
     <mat-icon matListItemIcon>group</mat-icon>
-    <a routerLink="team/{{team.id}}" class="menu-link">{{ team.name }}</a>
+    <a routerLink="team/{{ team.id }}" class="menu-link">{{ team.name }}</a>
   </mat-list-item>
-  } @empty {
-  <mat-list-item class="menu-item">
-    <mat-icon matListItemIcon>group</mat-icon>
-    <a routerLink="." class="menu-link">Nincs csapatod</a>
+  }
+  <mat-list-item class="menu-item" (click)="openCreateTeamDialog()">
+    <mat-icon matListItemIcon>add</mat-icon>
+    <a class="menu-link">Csapat létrehozása</a>
   </mat-list-item>
-  } }
+  }
   <mat-divider />
   <mat-list-item class="menu-item">
     <mat-icon matListItemIcon>logout</mat-icon>

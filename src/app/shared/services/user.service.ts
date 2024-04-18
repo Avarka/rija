@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FullUser, User } from '../models/user';
 import { TeamService } from './team.service';
-import { BoardService } from './board.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,8 @@ export class UserService {
 
   constructor(
     private afs: AngularFirestore,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private authService: AuthService
   ) {}
 
   async createUser(user: User) {
@@ -30,9 +31,9 @@ export class UserService {
       .set(user);
   }
 
-  updateUser(user: FullUser) {
+  updateUser(user: User) {
     return this.afs
-      .collection<FullUser>(this.collectionName)
+      .collection<User>(this.collectionName)
       .doc(user.id)
       .update(user);
   }
@@ -71,5 +72,12 @@ export class UserService {
     });
   }
 
-
+  addTeamToCurrentUser(teamId: string) {
+    return this.authService.getUserId().then(async (userId) => {
+      if (!userId) return;
+      const user = await this.getUserByIdPromise(userId);
+      user.teams.push(teamId);
+      return this.updateUser(user);
+    });
+  }
 }

@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Csapat létrehozása</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form" #formDirective="ngForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Csapatnév</mat-label>
+      <input matInput type="text" formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Template</mat-label>
+        <mat-select>
+          <mat-option value="default">Új-Folyamatban-Kész</mat-option>
+          <mat-option value="idk" disabled>TBA</mat-option>
+        </mat-select>
+      </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions [align]="'end'">
+  <button mat-button mat-dialog-close>Mégsem</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit()">Létrehoz</button>
+</mat-dialog-actions>

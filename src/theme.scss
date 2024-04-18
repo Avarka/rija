@@ -7,7 +7,7 @@
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.core();
-$rija-primary-platte: (
+$rija-primary-palette: (
   50 : #e8eaf8,
   100 : #c6cbee,
   200 : #a0a9e3,
@@ -142,7 +142,7 @@ $rija-rose-palette: (
 
 
 
-$rija-primary: mat.define-palette($rija-primary-platte, 500, 200, 700, 600);
+$rija-primary: mat.define-palette($rija-primary-palette, 500, 200, 700, 600);
 $rija-accent: mat.define-palette($rija-accent-platte, 500, 200, 700);
 $rija-secondary: mat.define-palette($rija-secondary-palette);
 $rija-rose: mat.define-palette($rija-rose-palette);

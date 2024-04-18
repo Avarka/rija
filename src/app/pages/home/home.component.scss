@@ -8,3 +8,10 @@ mat-sidenav-container {
 mat-sidenav {
   background-color: mat.get-color-from-palette(theme.$rija-rose-palette, 100);
 }
+
+.fab-button {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 2;
+}

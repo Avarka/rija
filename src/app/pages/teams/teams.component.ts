@@ -3,7 +3,7 @@ import { TeamService } from '../../shared/services/team.service';
 import { ActivatedRoute } from '@angular/router';
 import { Team } from '../../shared/models/team';
 import { LoggerService } from '../../shared/services/logger.service';
-import { Board, FullBoard } from '../../shared/models/board';
+import { Board } from '../../shared/models/board';
 import { BoardService } from '../../shared/services/board.service';
 
 @Component({

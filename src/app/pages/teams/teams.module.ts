@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TeamsRoutingModule } from './teams-routing.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TeamsComponent } from './teams.component';
 import { BoardComponent } from './board/board.component';
 
@@ -13,6 +14,7 @@ import { BoardComponent } from './board/board.component';
   ],
   imports: [
     CommonModule,
+    MatProgressSpinnerModule,
     TeamsRoutingModule
   ]
 })

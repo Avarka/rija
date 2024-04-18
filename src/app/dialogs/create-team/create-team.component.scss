@@ -1,0 +1,13 @@
+form {
+    padding: 12px 0;
+    display: flex;
+    gap: 12px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+form mat-form-field {
+    flex: 1 0 50%;
+}

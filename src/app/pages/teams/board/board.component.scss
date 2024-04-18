@@ -1,3 +1,6 @@
+@use "@angular/material" as mat;
+@use "../../../../theme.scss" as theme;
+
 .board-wrapper {
   display: flex;
   flex-wrap: nowrap;
@@ -5,29 +8,43 @@
   align-items: stretch;
   margin: 0 auto;
   max-width: 1200px;
-  padding: 0 15px;
-  height: 100%;
+  padding: 15px;
+  height: calc(100vh - 64px);
   flex-basis: auto;
   gap: 15px;
+  box-sizing: border-box;
+  overflow-x: auto;
 }
 
 .board-wrapper .board-column {
-    background-color: #f4f4f4;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    width: 300px;
+  background-color: mat.get-color-from-palette(
+    theme.$rija-primary-palette,
+    100
+  );
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  min-width: 300px;
 }
 
 .board-wrapper .board-column .board-column-header {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  h3 {
+    font-size: unset;
+    margin: 0;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    color:rgba(0, 0, 0, 0.7);
+    letter-spacing: 2px;
+  }
 }
 
 .board-wrapper .board-column .board-column-content {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
 }

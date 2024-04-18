@@ -7,6 +7,8 @@ import { TeamService } from '../services/team.service';
 import { FullTeam, Team } from '../models/team';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateTeamComponent } from '../../dialogs/create-team/create-team.component';
 
 @Component({
   selector: 'app-menu',
@@ -24,6 +26,7 @@ export class MenuComponent implements OnInit {
     private authService: AuthService,
     private teamService: TeamService,
     private router: Router,
+    private dialog: MatDialog,
     @Optional() private logger: LoggerService
   ) {}
 
@@ -32,7 +35,7 @@ export class MenuComponent implements OnInit {
       if (!userId) return;
       this.laodingTeams = true;
       this.user = await this.getUser(userId);
-      this.teams = this.getTeams(this.user.teams);
+      this.teams = this.getTeams();
       this.laodingTeams = false;
     });
   }
@@ -41,7 +44,8 @@ export class MenuComponent implements OnInit {
     return this.userService.getUserByIdPromise(userId);
   }
 
-  getTeams(teamIds: Array<string>): Array<Team> {
+  getTeams(): Array<Team> {
+    const teamIds = this.user!.teams;
     const teams: Array<Team> = [];
     teamIds.forEach(async (teamId) => {
       let team = await this.teamService.getTeamById(teamId);
@@ -49,6 +53,21 @@ export class MenuComponent implements OnInit {
       teams.push(team);
     });
     return teams;
+  }
+
+  openCreateTeamDialog() {
+    let dialogRef = this.dialog.open(CreateTeamComponent, {
+      width: '700px',
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        this.laodingTeams = true;
+        this.teamCount++;
+        await this.getUser(this.user!.id);
+        this.teams = this.getTeams();
+        this.laodingTeams = false;
+      }
+    });
   }
 
   async logout() {

@@ -4,8 +4,11 @@
     } @else if (boards.length == 1) {
         <app-board [board]="boards[0]"></app-board>
     } @else {
-        <p> korte </p>
+        <p> Nincs board </p>
     }
 } @else {
-    <p> loading </p>
+    <div class="spinner-wrapper">
+        <mat-progress-spinner mode="indeterminate" />
+    </div>
+    
 }

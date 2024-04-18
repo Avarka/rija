@@ -4,6 +4,7 @@ import { FullTeam, Team } from '../models/team';
 import { LoggerService } from './logger.service';
 import { BoardService } from './board.service';
 import { UserService } from './user.service';
+import { newInProgressDoneBoard } from '../models/board';
 
 @Injectable({
   providedIn: 'root',
@@ -17,43 +18,21 @@ export class TeamService {
     @Optional() private logger: LoggerService
   ) {}
 
-  async createTeam(team: Team) {
-    const boardId = this.afs.createId();
-    const stateIds = {
-      new: this.afs.createId(),
-      inProgress: this.afs.createId(),
-      done: this.afs.createId(),
-    };
-    await this.boardService.createBoard({
-      id: boardId,
-      team: team.id,
-      name: 'Alapértelmezett tábla',
-      statuses: [
-        {
-          id: stateIds.new,
-          name: 'Új',
-          color: '#FF0000',
-          previousStatuses: [],
-          nextStatuses: [stateIds.inProgress],
-        },
-        {
-          id: stateIds.inProgress,
-          name: 'Folyamatban',
-          color: '#00FF00',
-          previousStatuses: [stateIds.new],
-          nextStatuses: [stateIds.done],
-        },
-        {
-          id: stateIds.done,
-          name: 'Kész',
-          color: '#0000FF',
-          previousStatuses: [stateIds.inProgress],
-          nextStatuses: [],
-        },
-      ],
-      tickets: [],
-    });
-    team.boards.push(boardId);
+  async createTeam(team: Team, def = true) {
+    this.logger.info(`Creating team ${team.name}`);
+    this.logger.log(team)
+    if (def) {
+      const boardId = this.afs.createId();
+      const stateIds = {
+        new: this.afs.createId(),
+        inProgress: this.afs.createId(),
+        done: this.afs.createId(),
+      };
+      await this.boardService.createBoard(
+        newInProgressDoneBoard(stateIds, team.id, boardId)
+      );
+      team.boards.push(boardId);
+    }
     return this.afs
       .collection<Team>(this.collectionName)
       .doc(team.id)

@@ -21,8 +21,8 @@ export class AuthService {
     return this.auth.user;
   }
 
-  getUserId() {
-    return this.auth.currentUser.then((user) => {
+  async getUserId() {
+    return await this.auth.currentUser.then((user) => {
       return user?.uid;
     });
   }
