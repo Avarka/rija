@@ -1,32 +1,34 @@
-<button mat-fab class="fab-button" [matMenuTriggerFor]="menu">
-  <mat-icon>settings</mat-icon>
-</button>
+@if (currentlySelectedTeam) {
+  <button mat-fab class="fab-button" [matMenuTriggerFor]="menu">
+    <mat-icon>settings</mat-icon>
+  </button>
 
-<mat-menu #menu="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="people">
-    <mat-icon>person</mat-icon>
-    <span>Hozzáférők</span>
-  </button>
-  <button mat-menu-item>
-    <mat-icon>add_task</mat-icon>
-    <span>Feladat felvétele</span>
-  </button>
-  <button mat-menu-item>
-    <mat-icon color="warn">delete</mat-icon>
-    <span>Csapat törlése</span>
-  </button>
-</mat-menu>
-
-<mat-menu #people="matMenu">
-  <button mat-menu-item>
-    <mat-icon>person_add</mat-icon>
-    <span>Hozzáadás</span>
-  </button>
-  <button mat-menu-item>
-    <mat-icon>person_remove</mat-icon>
-    <span>Törlés</span>
-  </button>
-</mat-menu>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="people">
+      <mat-icon>person</mat-icon>
+      <span>Hozzáférők</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>add_task</mat-icon>
+      <span>Feladat felvétele</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon color="warn">delete</mat-icon>
+      <span>Csapat törlése</span>
+    </button>
+  </mat-menu>
+  
+  <mat-menu #people="matMenu">
+    <button mat-menu-item>
+      <mat-icon>person_add</mat-icon>
+      <span>Hozzáadás</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>person_remove</mat-icon>
+      <span>Törlés</span>
+    </button>
+  </mat-menu>
+}
 
 <mat-sidenav-container autosize>
   <mat-sidenav
@@ -50,6 +52,6 @@
       </button>
       <span>{{ title }}</span>
     </mat-toolbar>
-    <router-outlet />
+    <router-outlet  />
   </mat-sidenav-content>
 </mat-sidenav-container>

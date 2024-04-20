@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TeamService } from '../../shared/services/team.service';
 import { Team } from '../../shared/models/team';
@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BoardService } from '../../shared/services/board.service';
 import { UserService } from '../../shared/services/user.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { LoggerService } from '../../shared/services/logger.service';
 
 @Component({
   selector: 'app-create-team',
@@ -26,7 +27,8 @@ export class CreateTeamComponent {
     private afs: AngularFirestore,
     private boardService: BoardService,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    @Optional() private loggerService: LoggerService
   ) {}
 
   async onSubmit() {
