@@ -10,7 +10,7 @@ import { PassThroughService } from '../../shared/services/pass-through.service';
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
-  styleUrl: './teams.component.scss'
+  styleUrl: './teams.component.scss',
 })
 export class TeamsComponent implements OnInit, OnDestroy {
   team?: Team;
@@ -21,24 +21,25 @@ export class TeamsComponent implements OnInit, OnDestroy {
     private boardService: BoardService,
     private route: ActivatedRoute,
     private passThroughService: PassThroughService,
-    @Optional() private logger: LoggerService
+    @Optional() private logger: LoggerService,
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(async params => {
-      this.team = await this.teamService.getTeamById(params["id"]);
-      this.passThroughService.changeTitle(this.team.name);
+    this.route.params.subscribe(async (params) => {
+      this.team = await this.teamService.getTeamById(params['teamId']);
+      this.passThroughService.changeCurrentlySelectedTeam(this.team);
       this.boards = await this.getBoards(this.team.boards);
     });
   }
 
   ngOnDestroy() {
+    this.passThroughService.clearCurrentlySelectedTeam();
     this.passThroughService.clearTitle();
   }
 
   async getBoards(boardIds: string[]): Promise<Board[]> {
     const boards: Board[] = [];
-    boardIds.forEach(async boardId => {
+    boardIds.forEach(async (boardId) => {
       let board = await this.boardService.getBoardById(boardId);
       boards.push(board);
     });

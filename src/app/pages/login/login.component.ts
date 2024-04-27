@@ -1,5 +1,10 @@
 import { Component, Optional } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -21,7 +26,7 @@ export class LoginComponent {
     private authService: AuthService,
     private _snackBar: MatSnackBar,
     private router: Router,
-    @Optional() private logger?: LoggerService
+    @Optional() private logger?: LoggerService,
   ) {}
 
   onLogin(formDirective: FormGroupDirective): void {

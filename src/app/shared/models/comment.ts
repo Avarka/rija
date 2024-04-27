@@ -1,9 +1,9 @@
-import { FullUser } from "./user";
+import { FullUser } from './user';
 
 export interface Comment {
-    id: string;
-    author: FullUser;
-    created: Date;
-    updated: Date;
-    content: string;
+  id: string;
+  author: FullUser;
+  created: Date;
+  updated: Date;
+  content: string;
 }

@@ -1,33 +1,47 @@
 @if (currentlySelectedTeam) {
-  <button mat-fab class="fab-button" [matMenuTriggerFor]="menu">
-    <mat-icon>settings</mat-icon>
-  </button>
+<button mat-fab class="fab-button" [matMenuTriggerFor]="menu">
+  <mat-icon>settings</mat-icon>
+</button>
 
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item [matMenuTriggerFor]="people">
-      <mat-icon>person</mat-icon>
-      <span>Hozzáférők</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>add_task</mat-icon>
-      <span>Feladat felvétele</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon color="warn">delete</mat-icon>
-      <span>Csapat törlése</span>
-    </button>
-  </mat-menu>
-  
-  <mat-menu #people="matMenu">
-    <button mat-menu-item>
-      <mat-icon>person_add</mat-icon>
-      <span>Hozzáadás</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>person_remove</mat-icon>
-      <span>Törlés</span>
-    </button>
-  </mat-menu>
+<mat-menu #menu="matMenu">
+  <button
+    mat-menu-item
+    [matMenuTriggerFor]="people"
+    disabled
+    matTooltip="Következő verzióban! :("
+    matTooltipPosition="above"
+  >
+    <mat-icon>person</mat-icon>
+    <span>Hozzáférők</span>
+  </button>
+  <button
+    mat-menu-item
+    [routerLink]="[
+      'team',
+      currentlySelectedTeam.id,
+      'create-ticket',
+      currentlySelectedTeam.boards[0]
+    ]"
+  >
+    <mat-icon>add_task</mat-icon>
+    <span>Feladat felvétele</span>
+  </button>
+  <button mat-menu-item (click)="confirmDeleteTeam()">
+    <mat-icon color="warn">delete</mat-icon>
+    <span>Csapat törlése</span>
+  </button>
+</mat-menu>
+
+<mat-menu #people="matMenu">
+  <button mat-menu-item>
+    <mat-icon>person_add</mat-icon>
+    <span>Hozzáadás</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>person_remove</mat-icon>
+    <span>Törlés</span>
+  </button>
+</mat-menu>
 }
 
 <mat-sidenav-container autosize>
@@ -37,7 +51,12 @@
     [fixedInViewport]="mobileQuery.matches"
     [opened]="!mobileQuery.matches"
   >
-    <app-menu />
+    <app-menu
+      [loadingTeams]="teams === null"
+      [teams]="teams || []"
+      [teamCount]="user?.teams?.length || 1"
+      (teamCreated)="onTeamCreated()"
+    />
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -52,6 +71,11 @@
       </button>
       <span>{{ title }}</span>
     </mat-toolbar>
-    <router-outlet  />
+    @if (!currentlySelectedTeam) {
+    <div class="default-wrapper">
+      <app-default />
+    </div>
+    }
+    <router-outlet />
   </mat-sidenav-content>
 </mat-sidenav-container>

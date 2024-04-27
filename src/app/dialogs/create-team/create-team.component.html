@@ -7,7 +7,7 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Template</mat-label>
-        <mat-select formControlName="template">
+        <mat-select value="default" formControlName="template">
           <mat-option value="default">Új-Folyamatban-Kész</mat-option>
           <mat-option value="idk" disabled>TBA</mat-option>
         </mat-select>
@@ -16,5 +16,5 @@
 </mat-dialog-content>
 <mat-dialog-actions [align]="'end'">
   <button mat-button mat-dialog-close>Mégsem</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit()">Létrehoz</button>
+  <button mat-button cdkFocusInitial (click)="onSubmit()">Létrehoz</button>
 </mat-dialog-actions>

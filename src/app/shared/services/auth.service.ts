@@ -3,11 +3,13 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { LoggerService } from './logger.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private auth: AngularFireAuth, @Optional() private logger: LoggerService) { }
+  constructor(
+    private auth: AngularFireAuth,
+    @Optional() private logger: LoggerService,
+  ) {}
 
   login(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password);
@@ -30,5 +32,4 @@ export class AuthService {
   logout() {
     return this.auth.signOut();
   }
-
 }

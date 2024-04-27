@@ -25,11 +25,16 @@ export const emptyBoard: Board = {
   tickets: [],
 };
 
-export const newInProgressDoneBoard = (stateIds: {
-  new: string;
-  inProgress: string;
-  done: string;
-}, teamId: string, boardId: string,  boardName = "Alapértelmezett tábla"): Board => {
+export const newInProgressDoneBoard = (
+  stateIds: {
+    new: string;
+    inProgress: string;
+    done: string;
+  },
+  teamId: string,
+  boardId: string,
+  boardName = 'Alapértelmezett tábla',
+): Board => {
   return {
     id: boardId,
     team: teamId,

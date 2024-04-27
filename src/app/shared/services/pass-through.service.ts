@@ -7,7 +7,9 @@ import { Team } from '../models/team';
 })
 export class PassThroughService {
   private toolbarTitle: Subject<string> = new Subject<string>();
-  private currentlySelectedTeam: Subject<Team | undefined> = new Subject<Team | undefined>();
+  private currentlySelectedTeam: Subject<Team | undefined> = new Subject<
+    Team | undefined
+  >();
 
   constructor() {}
 
@@ -22,6 +24,10 @@ export class PassThroughService {
   changeTitle = (title: string) => this.toolbarTitle.next(title);
   clearTitle = () => this.changeTitle('');
 
-  changeCurrentlySelectedTeam = (team: Team | undefined) => this.currentlySelectedTeam.next(team);
-  clearCurrentlySelectedTeam = () => this.changeCurrentlySelectedTeam(undefined);
+  changeCurrentlySelectedTeam = (team: Team | undefined) => {
+    this.changeTitle(team ? team.name : '');
+    this.currentlySelectedTeam.next(team);
+  };
+  clearCurrentlySelectedTeam = () =>
+    this.changeCurrentlySelectedTeam(undefined);
 }

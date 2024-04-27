@@ -28,7 +28,7 @@ const routes: Routes = [
     path: '**',
     loadChildren: () =>
       import('./shared/not-found/not-found.module').then(
-        (m) => m.NotFoundModule
+        (m) => m.NotFoundModule,
       ),
   },
 ];

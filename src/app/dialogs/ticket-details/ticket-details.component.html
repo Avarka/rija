@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>{{ ticket.title }}</h2>
+<mat-dialog-content [class]="['mat-typography', editMode ? 'editing' : '']">
+  @if (editMode) {
+  <mat-form-field>
+    <mat-label>Felelős:</mat-label>
+    <mat-select [(ngModel)]="ticket.assignee.id" placeholder="Felelős">
+      @for (user of usersInTeam; track user.id) {
+      <mat-option [value]="user.id">{{ user.username }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Státusz:</mat-label>
+    <mat-select [(ngModel)]="ticket.status.id" placeholder="Státusz">
+      @for (status of statuses; track status.id) {
+      <mat-option [value]="status.id">{{ status.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-divider />
+
+  <mat-form-field>
+    <textarea
+      matInput
+      [(ngModel)]="ticket.description"
+      placeholder="Leírás"
+      rows="5"
+    ></textarea>
+  </mat-form-field>
+
+  } @else {
+  <p>Felelős: {{ ticket.assignee.username || "nincs" }}</p>
+  <p>Státusz: {{ ticket.status.name }}</p>
+
+  <mat-divider />
+
+  <p>{{ ticket.description }}</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Bezár</button>
+  @if (editMode) {
+  <button mat-button (click)="saveTicket()">Mentés</button>
+  } @else {
+  <button mat-button (click)="editTicketToggle()">Szerkesztés</button>
+  }
+  <button mat-button color="warn" (click)="confirmDelete()">Törlés</button>
+  <span matTooltip="Következő verizóban. :(">
+    <button mat-button disabled color="accent" [mat-dialog-close]="true">
+      Továbbléptet
+    </button>
+  </span>
+</mat-dialog-actions>

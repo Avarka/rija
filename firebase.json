@@ -2,8 +2,19 @@
   "hosting": [
     {
       "target": "rija",
-      "source": ".",
-      "frameworksBackend": {}
+      "public": "dist/rija/browser",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "frameworksBackend": {},
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "/index.html"
+        }
+      ]
     }
   ]
 }

@@ -11,7 +11,7 @@ export class TicketService {
 
   constructor(
     private afs: AngularFirestore,
-    @Optional() private logger: LoggerService
+    @Optional() private logger: LoggerService,
   ) {}
 
   createTicket(ticket: Ticket) {
@@ -19,6 +19,20 @@ export class TicketService {
       .collection<Ticket>(this.collectionName)
       .doc(ticket.id)
       .set(ticket);
+  }
+
+  updateTicket(ticket: Ticket) {
+    return this.afs
+      .collection<Ticket>(this.collectionName)
+      .doc(ticket.id)
+      .update(ticket);
+  }
+
+  deleteTicket(ticketId: string) {
+    return this.afs
+      .collection<Ticket>(this.collectionName)
+      .doc(ticketId)
+      .delete();
   }
 
   getTicketById(ticketId: string): Promise<Ticket> {
@@ -36,7 +50,53 @@ export class TicketService {
           complete: () => {
             if (this.logger) {
               this.logger.log(
-                `TicketService.getTicketById(${ticketId}) completed.`
+                `TicketService.getTicketById(${ticketId}) completed.`,
+              );
+            }
+          },
+        });
+    });
+  }
+
+  getAssignedTicketForUser(userId: string): Promise<Ticket[]> {
+    return new Promise((resolve, reject) => {
+      this.afs
+        .collection<Ticket>(this.collectionName, (ref) =>
+          ref.where('assignee', '==', userId),
+        )
+        .get()
+        .subscribe({
+          next: (tickets) => {
+            resolve(tickets.docs.map((ticket) => ticket.data()));
+          },
+          error: (err) => reject(err),
+          complete: () => {
+            if (this.logger) {
+              this.logger.log(
+                `TicketService.getTicketForUser(${userId}) completed.`,
+              );
+            }
+          },
+        });
+    });
+  }
+
+  getReportedTicketForUser(userId: string): Promise<Ticket[]> {
+    return new Promise((resolve, reject) => {
+      this.afs
+        .collection<Ticket>(this.collectionName, (ref) =>
+          ref.where('reporter', '==', userId),
+        )
+        .get()
+        .subscribe({
+          next: (tickets) => {
+            resolve(tickets.docs.map((ticket) => ticket.data()));
+          },
+          error: (err) => reject(err),
+          complete: () => {
+            if (this.logger) {
+              this.logger.log(
+                `TicketService.getTicketForUser(${userId}) completed.`,
               );
             }
           },

@@ -1,0 +1,54 @@
+<div class="button-wrapper">
+  <button mat-flat-button color="primary" (click)="accordion.openAll()">
+    Összes lenyitása
+  </button>
+  <button mat-flat-button color="primary" (click)="accordion.closeAll()">
+    Összes bezárása
+  </button>
+</div>
+
+<mat-accordion multi>
+  @if(ticketsAssignedToMe && ticketsAssignedToMe.length > 0) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Rám váró feladatok</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="ticket-card-wrapper">
+      @for(ticket of ticketsAssignedToMe; track ticket.id) {
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{ ticket.title }}</mat-card-title>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          {{ ticket.description }}
+        </mat-card-content>
+      </mat-card>
+      }
+    </div>
+  </mat-expansion-panel>
+  } @if(ticketsCreatedByMe && ticketsCreatedByMe.length > 0) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Általam létrehozott feladatok</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="ticket-card-wrapper">
+      @for(ticket of ticketsCreatedByMe; track ticket.id) {
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{ ticket.title }}</mat-card-title>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          {{ ticket.description }}
+        </mat-card-content>
+      </mat-card>
+      }
+    </div>
+  </mat-expansion-panel>
+  }
+</mat-accordion>

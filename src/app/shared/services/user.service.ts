@@ -13,7 +13,7 @@ export class UserService {
   constructor(
     private afs: AngularFirestore,
     private teamService: TeamService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   async createUser(user: User) {
@@ -77,6 +77,15 @@ export class UserService {
       if (!userId) return;
       const user = await this.getUserByIdPromise(userId);
       user.teams.push(teamId);
+      return this.updateUser(user);
+    });
+  }
+
+  removeTeamFromCurrentUser(teamId: string) {
+    return this.authService.getUserId().then(async (userId) => {
+      if (!userId) return;
+      const user = await this.getUserByIdPromise(userId);
+      user.teams = user.teams.filter((id) => id !== teamId);
       return this.updateUser(user);
     });
   }

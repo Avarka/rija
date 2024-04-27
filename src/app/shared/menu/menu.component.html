@@ -5,12 +5,12 @@
   </mat-list-item>
   <mat-divider />
   <h3 matSubheader>Csapatok</h3>
-  @if (laodingTeams) {
+  @if (loadingTeams) {
   <ngx-skeleton-loader mat-list-item [count]="teamCount+1" />
   } @else { @for (team of teams; track $index ) {
   <mat-list-item class="menu-item">
     <mat-icon matListItemIcon>group</mat-icon>
-    <a routerLink="team/{{ team.id }}" class="menu-link">{{ team.name }}</a>
+    <a [routerLink]="['team', team.id]" class="menu-link">{{ team.name }}</a>
   </mat-list-item>
   }
   <mat-list-item class="menu-item" (click)="openCreateTeamDialog()">

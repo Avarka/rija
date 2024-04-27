@@ -2,7 +2,7 @@
     @if (boards.length > 1) {
         
     } @else if (boards.length == 1) {
-        <app-board [board]="boards[0]"></app-board>
+        <app-board [usersInTeam]="team.members | userConverter | async" [boardPromise]="boards[0] | fullBoardConverter"></app-board>
     } @else {
         <p> Nincs board </p>
     }

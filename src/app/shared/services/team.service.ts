@@ -15,12 +15,12 @@ export class TeamService {
   constructor(
     private afs: AngularFirestore,
     private boardService: BoardService,
-    @Optional() private logger: LoggerService
+    @Optional() private logger: LoggerService,
   ) {}
 
   async createTeam(team: Team, def = true) {
     this.logger.info(`Creating team ${team.name}`);
-    this.logger.log(team)
+    this.logger.log(team);
     if (def) {
       const boardId = this.afs.createId();
       const stateIds = {
@@ -29,7 +29,7 @@ export class TeamService {
         done: this.afs.createId(),
       };
       await this.boardService.createBoard(
-        newInProgressDoneBoard(stateIds, team.id, boardId)
+        newInProgressDoneBoard(stateIds, team.id, boardId),
       );
       team.boards.push(boardId);
     }
@@ -46,11 +46,16 @@ export class TeamService {
       .update(team);
   }
 
-  deleteTeam(teamId: string) {
-    return this.afs
-      .collection<FullTeam>(this.collectionName)
-      .doc(teamId)
-      .delete();
+  async deleteTeam(team: Team) {
+    await Promise.all(
+      team.boards.map((boardId) => this.boardService.deleteBoardById(boardId)),
+    );
+
+    return this.deleteTeamById(team.id);
+  }
+
+  deleteTeamById(teamId: string) {
+    return this.afs.collection<Team>(this.collectionName).doc(teamId).delete();
   }
 
   getTeams() {

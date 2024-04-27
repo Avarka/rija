@@ -13,7 +13,7 @@ export class BoardService {
   constructor(
     private afs: AngularFirestore,
     private ticketService: TicketService,
-    @Optional() private logger: LoggerService
+    @Optional() private logger: LoggerService,
   ) {}
 
   createBoard(board: Board) {
@@ -21,6 +21,13 @@ export class BoardService {
       .collection<Board>(this.collectionName)
       .doc(board.id)
       .set(board);
+  }
+
+  updateBoard(board: Board) {
+    return this.afs
+      .collection<Board>(this.collectionName)
+      .doc(board.id)
+      .update(board);
   }
 
   async getBoardById(boardId: string): Promise<Board> {
@@ -38,7 +45,7 @@ export class BoardService {
           complete: () => {
             if (this.logger) {
               this.logger.log(
-                `BoardService.getBoardById(${boardId}) completed.`
+                `BoardService.getBoardById(${boardId}) completed.`,
               );
             }
           },
@@ -54,10 +61,28 @@ export class BoardService {
       }
       const tickets = await Promise.all(
         board.tickets.map((ticketId) =>
-          this.ticketService.getTicketById(ticketId)
-        )
+          this.ticketService.getTicketById(ticketId),
+        ),
       );
       resolve({ ...board, tickets });
+    });
+  }
+
+  deleteBoard(board: Board) {
+    return this.deleteBoardById(board.id);
+  }
+
+  deleteBoardById(boardId: string) {
+    return this.afs
+      .collection<Board>(this.collectionName)
+      .doc(boardId)
+      .delete();
+  }
+
+  async addTicketToBoard(boardId: string, ticketId: string) {
+    return this.getBoardById(boardId).then((board) => {
+      board.tickets.push(ticketId);
+      return this.updateBoard(board);
     });
   }
 }

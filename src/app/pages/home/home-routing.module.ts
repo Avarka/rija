@@ -8,7 +8,7 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: 'team/:id',
+        path: 'team/:teamId',
         loadChildren: () =>
           import('../teams/teams.module').then((m) => m.TeamsModule),
       },

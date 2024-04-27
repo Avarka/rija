@@ -1,0 +1,16 @@
+form {
+    padding: 5em;
+    @media screen and (max-width: 600px){
+        padding: 1em;
+    }
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+form mat-form-field {
+    flex: 1 0 50%;
+}

@@ -18,7 +18,7 @@ import { LoggerService } from '../../shared/services/logger.service';
 export class CreateTeamComponent {
   form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    template: new FormControl(''),
+    template: new FormControl('default'),
   });
 
   constructor(
@@ -28,7 +28,7 @@ export class CreateTeamComponent {
     private boardService: BoardService,
     private authService: AuthService,
     private userService: UserService,
-    @Optional() private loggerService: LoggerService
+    @Optional() private loggerService: LoggerService,
   ) {}
 
   async onSubmit() {
@@ -43,7 +43,9 @@ export class CreateTeamComponent {
           inProgress: this.afs.createId(),
           done: this.afs.createId(),
         };
-        boards.push(newInProgressDoneBoard(stateIds, newTeamId, this.afs.createId()));
+        boards.push(
+          newInProgressDoneBoard(stateIds, newTeamId, this.afs.createId()),
+        );
         break;
       default:
         break;
@@ -52,13 +54,14 @@ export class CreateTeamComponent {
       name: this.form.value.name,
       boards: boards.map((board) => board.id),
       id: newTeamId,
-      members: [await this.authService.getUserId() ?? ""],
+      members: [(await this.authService.getUserId()) ?? ''],
     };
-    await Promise.all(boards.map((board) => this.boardService.createBoard(board)));
-    this.userService.addTeamToCurrentUser(team.id);
-    this.teamsService.createTeam(team, false).then(() => {
-      this.form.reset();
-      this.dialogRef.close(true);
-    });
+    await Promise.all(
+      boards.map((board) => this.boardService.createBoard(board)),
+    );
+    await this.userService.addTeamToCurrentUser(team.id);
+    await this.teamsService.createTeam(team, false);
+    this.dialogRef.close(true);
+    this.form.reset();
   }
 }

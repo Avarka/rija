@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>
+    <mat-icon>delete</mat-icon>
+    Biztosan törölni szeretnéd?
+</h2>
+<mat-dialog-content class="mat-typography">
+    <p>Ez a művelet visszavonhatatlan.</p>
+</mat-dialog-content>
+<mat-dialog-actions [align]="'end'">
+  <button mat-button mat-dialog-close>Mégsem</button>
+  <button mat-button color="warn" cdkFocusInitial (click)="confirm()">Törlés</button>
+</mat-dialog-actions>

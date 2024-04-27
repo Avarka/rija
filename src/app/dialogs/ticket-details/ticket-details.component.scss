@@ -1,0 +1,8 @@
+mat-dialog-content.editing {
+  display: flex;
+  flex-direction: column;
+  
+  mat-divider {
+    margin: 10px 0;
+  }
+}

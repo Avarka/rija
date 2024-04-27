@@ -1,0 +1,10 @@
+<mat-card (click)="onTicketClick()">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>{{ ticket.title }}</mat-card-title>
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-content>
+    {{ ticket.description | sliceWords : 0 : 10 }}
+  </mat-card-content>
+</mat-card>

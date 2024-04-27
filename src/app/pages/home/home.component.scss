@@ -15,3 +15,11 @@ mat-sidenav {
   right: 32px;
   z-index: 2;
 }
+
+.default-wrapper {
+  padding: 3rem;
+
+  @media screen and (max-width: 600px){
+    padding: 1rem;
+  }
+}

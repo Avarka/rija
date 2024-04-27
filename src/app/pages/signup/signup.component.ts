@@ -41,7 +41,7 @@ export class SignupComponent {
     private teamService: TeamService,
     private _snackBar: MatSnackBar,
     private router: Router,
-    @Optional() private logger?: LoggerService
+    @Optional() private logger?: LoggerService,
   ) {}
 
   onSignup(formDirective: FormGroupDirective): void {
